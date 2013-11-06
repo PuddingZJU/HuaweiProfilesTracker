@@ -61,6 +61,7 @@ public class MainActivity extends Activity implements SensorEventListener, OnIni
 	private int selectlabel = 0;
 	private SensorData sensorData = new SensorData();
 	private TextToSpeech mTts;  
+	private String about_str = "Write About Here....";
 	 private static final int REQ_TTS_STATUS_CHECK = 0;
 	private String[] statuslabelname = { "Avtivities of Daliy Life", "Walking",
 			"Running", "Driving", "Falling" };
@@ -83,13 +84,13 @@ public class MainActivity extends Activity implements SensorEventListener, OnIni
 	private void CheckStatus() {
 		//edit code here
 		Random random = new Random();
-		SetStatus(random.nextInt(5), "System");
+		SetStatue(random.nextInt(5), "System");
 	}
 	private void PushSensorData() {
 		//sensorData
 		//add your code here 
 	}
-	private void SetStatus(int label, String Opeartor) {
+	private void SetStatue(int label, String Opeartor) {
 		if (label == statulabel) {
 			return;
 		}
@@ -157,7 +158,7 @@ public class MainActivity extends Activity implements SensorEventListener, OnIni
 		}
 		if (item.getItemId() == R.id.action_about) {
 			AlertDialog.Builder builder = new Builder(MainActivity.this);
-			builder.setMessage("Write About Here....");
+			builder.setMessage(about_str);
 			builder.setTitle("About");
 			builder.setNegativeButton("OK", new OnClickListener() {
 				public void onClick(DialogInterface dialog, int which) {
@@ -272,7 +273,7 @@ public class MainActivity extends Activity implements SensorEventListener, OnIni
 													public void onClick(
 															DialogInterface dialog,
 															int which) {
-														SetStatus(selectlabel,
+														SetStatue(selectlabel,
 																"User");
 													}
 												})
