@@ -16,6 +16,7 @@
         android:layout_above="@+id/HistoryButton"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
+        android:onClick="OnOffButtonClicked"
         android:text="Service On"
         android:textColor="@android:color/primary_text_dark" />
 
@@ -25,7 +26,8 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/OnOffButton"
         android:layout_alignLeft="@+id/OnOffButton"
-        android:src="@drawable/walk" />
+        android:onClick="StatusViewClicked"
+        android:src="@drawable/stand" />
 
     <Button
         android:id="@+id/HistoryButton"
@@ -34,6 +36,7 @@
         android:layout_alignLeft="@+id/OnOffButton"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
+        android:onClick="HistoryButtonClicked"
         android:text="@string/history"
         android:textColor="@android:color/primary_text_dark" />
 

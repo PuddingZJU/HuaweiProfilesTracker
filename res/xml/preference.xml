@@ -10,7 +10,7 @@
                android:enabled="true" 
                android:key="sample_rate" android:shouldDisableView="false"/>
            <EditTextPreference android:title="Status Timer" android:key="stimer" android:defaultValue="5" android:enabled="true"/>
-           <CheckBoxPreference android:title="Store Error Data Locally" android:key="sedl" android:shouldDisableView="false" android:enabled="true" android:defaultValue="true"/>
+           <CheckBoxPreference android:title="Store History Locally" android:key="sedl" android:shouldDisableView="false" android:enabled="true" android:defaultValue="true"/>
            <Preference android:key="clear_history" android:title="Clear History"/>
            <Preference android:key="reset" android:title="Reset"/>
     </PreferenceCategory>
