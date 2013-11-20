@@ -42,9 +42,9 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 public class MainActivity extends Activity implements SensorEventListener, OnInitListener {
-
-	
-
+	private boolean _isFirstFrame=true;
+	private double _baseTimestamp=0;
+	private long _beginTimeInNano=0;
 	private Button onOffButton = null;
 	private Button historyButton = null;
 	private ImageView statusView = null;
@@ -59,7 +59,6 @@ public class MainActivity extends Activity implements SensorEventListener, OnIni
 	private File path;
 	private File file;
 	private int selectlabel = 0;
-	private SensorData sensorData = new SensorData();
 	private TextToSpeech mTts;  
 	private String about_str = "Write About Here....";
 	 private static final int REQ_TTS_STATUS_CHECK = 0;
@@ -86,7 +85,19 @@ public class MainActivity extends Activity implements SensorEventListener, OnIni
 		Random random = new Random();
 		SetStatue(random.nextInt(5), "System");
 	}
-	private void PushSensorData() {
+	private void PushAccelerometerData(float[] values,double timestamp) {
+		//sensorData
+		//add your code here 
+	}
+	private void PushGyroscopeData(float[] values,double timestamp) {
+		//sensorData
+		//add your code here 
+	}
+	private void PushMagneticFiledData(float[] values,double timestamp) {
+		//sensorData
+		//add your code here 
+	}
+	private void PushRotationData(float[] values,double timestamp) {
 		//sensorData
 		//add your code here 
 	}
@@ -355,7 +366,7 @@ public class MainActivity extends Activity implements SensorEventListener, OnIni
 			}
 
 		};
-		
+		_baseTimestamp=System.currentTimeMillis();
 		statusTimer.schedule(statustimerTask, 0, (int) checktimer * 1000);
 		mySensorManager.registerListener(this,
 				mySensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
@@ -369,9 +380,12 @@ public class MainActivity extends Activity implements SensorEventListener, OnIni
 		mySensorManager.registerListener(this,
 				mySensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR),
 				sample_rate);
+		
 	}
 
 	private void Service_Off() {
+		_baseTimestamp=0;
+		_beginTimeInNano=0;
 		statusTimer.cancel();
 		mySensorManager.unregisterListener(this);
 		if(mTts != null)  
@@ -389,22 +403,28 @@ public class MainActivity extends Activity implements SensorEventListener, OnIni
 
 	@Override
 	public void onSensorChanged(SensorEvent event) {
+		long ts=event.timestamp;
+		if(_isFirstFrame){
+			_isFirstFrame=false;
+			
+			_beginTimeInNano=ts;
+		}
+		double epochTime=_baseTimestamp*Consts.MS2S+(ts-_beginTimeInNano)*Consts.NS2S;
+		System.out.println("epochTime: "+epochTime);
 		// TODO Auto-generated method stub
 		
 		if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
-			sensorData.set_ACCELEROMETER(event.values);
+		 	PushAccelerometerData(event.values,epochTime);
 		}
 		if (event.sensor.getType() == Sensor.TYPE_GYROSCOPE) {
-			sensorData.set_GYROSCOPE(event.values);
+			PushGyroscopeData(event.values,epochTime);
 		}
 		if (event.sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD) {
-			sensorData.set_MAGNETIC_FIELD(event.values);
+			PushMagneticFiledData(event.values,epochTime);
 		}
 		if (event.sensor.getType() == Sensor.TYPE_ROTATION_VECTOR) {
-			sensorData.set_ROTATION_VECTOR(event.values);
-			//System.out.println(event.values.length);
+			PushRotationData(event.values, epochTime);
 		}
-		PushSensorData();
 	}
 
 	@Override
